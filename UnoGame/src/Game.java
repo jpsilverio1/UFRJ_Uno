@@ -91,9 +91,5 @@ public class Game {
 			return "finished";
 		}
 		return "active";
-	}
-	
-	
-	
-	
+	}	
 }
