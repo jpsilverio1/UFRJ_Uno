@@ -70,9 +70,15 @@ public class Game {
 		if (specialCardsValues.contains(currentCardValue)) {
 			return this.orderedPlayers.get(getNextPlayerIndex(currentPlayer.getOrder(), 1));
 		} else {
+			if (currentCardValue.equals("reverse") {
+				changeGameDirection();
+			}
 			return this.orderedPlayers.get(getNextPlayerIndex(currentPlayer.getOrder(), 0));
 		}
 		
+	}
+	private void changeGameDirection () {
+		this.gameDirection = -1*this.gameDirection;
 	}
 	private int getNextPlayerIndex (int currentPlayerIndex, int positionsToSkip) {
 		return (currentPlayerIndex -1 + numberOfPlayers + gameDirection*(1+positionsToSkip)) % numberOfPlayers;	
