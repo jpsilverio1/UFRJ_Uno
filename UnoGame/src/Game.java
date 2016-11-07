@@ -1,16 +1,14 @@
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class Game {
 	private List<Player> orderedPlayers;
 	private Card currentCard;
-	private int gameDirection;
+	private int roundDirection;
 	private Player currentPlayer;
 	private Player nextPlayer;
 	private int numberOfPlayers;
+	private String nextColorToPlay;
 	
 	public Game(List<Player> players, Card initialCard) {
 		this.orderedPlayers = new ArrayList<>(players.size());
@@ -18,78 +16,90 @@ public class Game {
 			orderedPlayers.add((player.getOrder()-1), player);
 		}
 		this.currentCard = initialCard;
+		this.nextColorToPlay = initialCard.getColor();
 		this.numberOfPlayers = players.size();
 		this.nextPlayer = null;
 		this.currentPlayer = null;
-		this.gameDirection = 1;
-	}
-	public Map<String,Object> makeAMove(Player currentPlayer, Card cardPlayed) {
-		this.currentCard = cardPlayed;
-		this.currentPlayer = currentPlayer;
-		String gameState = getGameState();
-		int cardsToDraw = 0;
-		Player playerThatShouldDrawCards = null;
-		this.nextPlayer = null;
-		if (gameIsNotFinished(gameState)) {
-			this.nextPlayer = getNextPlayer();
-			//TODO: transform into a single method and return a pair of int, Player
-			cardsToDraw = getNumberOfCardsToDraw();
-			playerThatShouldDrawCards = getPlayerThatShouldDraw();
+		if (initialCard.getID() == 2) {
+			this.roundDirection = -1;
+		} else {
+			this.roundDirection = 1;
 		}
-		return buildGameMoveReturn(gameState, cardsToDraw, playerThatShouldDrawCards);
+	}
+	public MoveOutput makeAMove(Player currentPlayer, Card cardPlayed, String action, String newColor) {
+		MoveOutput moveOutput = new MoveOutput();
+		this.currentPlayer = currentPlayer;
+		if (action.equals("Move")) {
+			this.currentCard = cardPlayed;
+			changeGameDirection(cardPlayed);
+		}
+		
+		this.nextPlayer = getNextPlayer();
+		MoveOutput.Action nextAction = getNextAction(action);
+		int cardsToDraw = getNumberOfCardsToDraw(action);
+		this.nextColorToPlay = getNextColorToPlay(action,newColor);
+		moveOutput.setCardOnTopOnDiscardPile(currentCard);
+		moveOutput.setCardsToDraw(cardsToDraw);
+		moveOutput.setNextAction(nextAction);
+		moveOutput.setNextColorToPlay(this.nextColorToPlay);
+		moveOutput.setNextPlayer(this.nextPlayer);
+		return moveOutput;
 	}
 	
-	private Map<String, Object> buildGameMoveReturn(String gameState, int cardsToDraw,
-			Player playerThatShouldDrawCards) {
-		Map<String, Object>  gameMap = new HashMap<>();
-		gameMap.put("gameState", gameState);
-		gameMap.put("cardsToDraw", cardsToDraw);
-		gameMap.put("nextPlayer", this.nextPlayer);
-		gameMap.put("winner", gameIsNotFinished(gameState) ? null : currentPlayer);
-		gameMap.put("playerThatShouldDraw", playerThatShouldDrawCards);
-		gameMap.put("currentCard", this.currentCard);
-		return gameMap;
+	private String getNextColorToPlay(String action,String newColor) {
+		if (action.equals("Move")) {
+			int currentCardID = currentCard.getID();
+			if (currentCardID == 5 || currentCardID == 4) {
+				return newColor;
+			}
+			else if (currentCardID >=0 && currentCardID <=3) {
+				return currentCard.getColor();
+			}
+		}
+		return this.nextColorToPlay;
 	}
-	private int getNumberOfCardsToDraw() {
-		switch (this.currentCard.getValue()) {
-			case "+2": return 2;
-			case "+4": return 4;
+	private MoveOutput.Action getNextAction(String action) {
+		if (action.equals("Move")) {
+			int currentCardID = currentCard.getID();
+			if (currentCardID == 1) {
+				return MoveOutput.Action.SKIP;
+			}
+			if (currentCardID == 3 || currentCardID == 5) {
+				return MoveOutput.Action.DRAW;
+			}
+			if (currentCardID == 0 || currentCardID == 2 || currentCardID == 4) {
+				return MoveOutput.Action.MOVE;
+			}
+		}
+		return MoveOutput.Action.MOVE;
+	}
+	private int getNumberOfCardsToDraw(String action) {
+		if (action.equals("Move")) {
+			switch (this.currentCard.getID()) {
+			case 3: return 2;
+			case 5: return 4;
 			default: return 0;
+			}
 		}
-	}
-	private Player getPlayerThatShouldDraw() {
-		switch (this.currentCard.getValue()) {
-			case "+2": 
-			case "+4": return this.orderedPlayers.get(getNextPlayerIndex(currentPlayer.getOrder(), 0));
-			default: return null;
-		}
+		return 0;
 	}
 	private Player getNextPlayer() {
-		List<String> specialCardsValues = Arrays.asList("+2", "+4", "skip");
-		String currentCardValue = this.currentCard.getValue();
-		if (specialCardsValues.contains(currentCardValue)) {
-			return this.orderedPlayers.get(getNextPlayerIndex(currentPlayer.getOrder(), 1));
-		} else {
-			if (currentCardValue.equals("reverse") {
-				changeGameDirection();
-			}
-			return this.orderedPlayers.get(getNextPlayerIndex(currentPlayer.getOrder(), 0));
+		return this.orderedPlayers.get(getNextPlayerIndex(currentPlayer.getOrder()));
+		
+	}
+	private void changeGameDirection (Card cardPlayed) {
+		if (cardPlayed.getID() == 2) {
+			this.roundDirection = -1*this.roundDirection;
 		}
 		
 	}
-	private void changeGameDirection () {
-		this.gameDirection = -1*this.gameDirection;
-	}
-	private int getNextPlayerIndex (int currentPlayerIndex, int positionsToSkip) {
-		return (currentPlayerIndex -1 + numberOfPlayers + gameDirection*(1+positionsToSkip)) % numberOfPlayers;	
-	}
-	private boolean gameIsNotFinished(String gameState) {
-		return !gameState.equals("finished");
-	}
-	private String getGameState() {
-		if (currentPlayer.getHand().isEmpty()) {
-			return "finished";
+	private int getNextPlayerIndex (int currentPlayerOrder) {
+		if (roundDirection  == 1 && currentPlayerOrder == numberOfPlayers){
+			return 0;
 		}
-		return "active";
+		if (roundDirection == -1 && currentPlayerOrder == 1) {
+			return (numberOfPlayers - 1);
+		}
+		return (currentPlayerOrder + roundDirection -1);
 	}	
 }
