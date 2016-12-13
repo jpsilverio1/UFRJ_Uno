@@ -1,5 +1,5 @@
 
-public interface Card {
+public interface ICard {
 	public int getNumber();
 	public String getColor();
 	public int getID();

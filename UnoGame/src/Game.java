@@ -2,18 +2,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Game {
-	private List<Player> orderedPlayers;
-	private Card currentCard;
+	private List<IPlayer> orderedPlayers;
+	private ICard currentCard;
 	private int roundDirection;
-	private Player currentPlayer;
-	private Player nextPlayer;
+	private IPlayer currentPlayer;
+	private IPlayer nextPlayer;
 	private int numberOfPlayers;
 	private String nextColorToPlay;
 	
-	public Game(List<Player> players, Card initialCard) {
+	public Game(List<IPlayer> players, ICard initialCard) {
 		this.orderedPlayers = new ArrayList<>(players.size());
-		for (Player player: players) {
-			orderedPlayers.add((player.getOrder()-1), player);
+		for (IPlayer player: players) {
+			orderedPlayers.add(player.getOrder()-1, player);
 		}
 		this.currentCard = initialCard;
 		this.nextColorToPlay = initialCard.getColor();
@@ -26,16 +26,15 @@ public class Game {
 			this.roundDirection = 1;
 		}
 	}
-	public MoveOutput makeAMove(Player currentPlayer, Card cardPlayed, String action, String newColor) {
+	public MoveOutput makeAMove(IPlayer currentPlayer, ICard cardPlayed, Action action, String newColor) {
 		MoveOutput moveOutput = new MoveOutput();
 		this.currentPlayer = currentPlayer;
-		if (action.equals("Move")) {
+		if (action == Action.MOVE) {
 			this.currentCard = cardPlayed;
 			changeGameDirection(cardPlayed);
 		}
-		
 		this.nextPlayer = getNextPlayer();
-		MoveOutput.Action nextAction = getNextAction(action);
+		Action nextAction = getNextAction(action);
 		int cardsToDraw = getNumberOfCardsToDraw(action);
 		this.nextColorToPlay = getNextColorToPlay(action,newColor);
 		moveOutput.setCardOnTopOnDiscardPile(currentCard);
@@ -46,8 +45,8 @@ public class Game {
 		return moveOutput;
 	}
 	
-	private String getNextColorToPlay(String action,String newColor) {
-		if (action.equals("Move")) {
+	private String getNextColorToPlay(Action action,String newColor) {
+		if (action == Action.MOVE) {
 			int currentCardID = currentCard.getID();
 			if (currentCardID == 5 || currentCardID == 4) {
 				return newColor;
@@ -58,23 +57,23 @@ public class Game {
 		}
 		return this.nextColorToPlay;
 	}
-	private MoveOutput.Action getNextAction(String action) {
-		if (action.equals("Move")) {
+	private Action getNextAction(Action action) {
+		if (action == Action.MOVE) {
 			int currentCardID = currentCard.getID();
 			if (currentCardID == 1) {
-				return MoveOutput.Action.SKIP;
+				return Action.SKIP;
 			}
 			if (currentCardID == 3 || currentCardID == 5) {
-				return MoveOutput.Action.DRAW;
+				return Action.DRAW;
 			}
 			if (currentCardID == 0 || currentCardID == 2 || currentCardID == 4) {
-				return MoveOutput.Action.MOVE;
+				return Action.MOVE;
 			}
 		}
-		return MoveOutput.Action.MOVE;
+		return Action.MOVE;
 	}
-	private int getNumberOfCardsToDraw(String action) {
-		if (action.equals("Move")) {
+	private int getNumberOfCardsToDraw(Action action) {
+		if (action == Action.MOVE) {
 			switch (this.currentCard.getID()) {
 			case 3: return 2;
 			case 5: return 4;
@@ -83,11 +82,11 @@ public class Game {
 		}
 		return 0;
 	}
-	private Player getNextPlayer() {
+	private IPlayer getNextPlayer() {
 		return this.orderedPlayers.get(getNextPlayerIndex(currentPlayer.getOrder()));
 		
 	}
-	private void changeGameDirection (Card cardPlayed) {
+	private void changeGameDirection (ICard cardPlayed) {
 		if (cardPlayed.getID() == 2) {
 			this.roundDirection = -1*this.roundDirection;
 		}
@@ -101,5 +100,5 @@ public class Game {
 			return (numberOfPlayers - 1);
 		}
 		return (currentPlayerOrder + roundDirection -1);
-	}	
+	}
 }

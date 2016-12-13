@@ -1,19 +1,14 @@
 
 public class MoveOutput {
-	private Card cardOnTopOnDiscardPile;
-	public enum Action {
-		MOVE,
-		DRAW,
-		SKIP
-	}
+	private ICard cardOnTopOnDiscardPile;
 	private Action nextAction;
 	private int cardsToDraw;
-	private Player nextPlayer;
+	private IPlayer nextPlayer;
 	private String nextColorToPlay;
-	public Card getCardOnTopOnDiscardPile() {
+	public ICard getCardOnTopOnDiscardPile() {
 		return cardOnTopOnDiscardPile;
 	}
-	public void setCardOnTopOnDiscardPile(Card cardOnTopOnDiscardPile) {
+	public void setCardOnTopOnDiscardPile(ICard cardOnTopOnDiscardPile) {
 		this.cardOnTopOnDiscardPile = cardOnTopOnDiscardPile;
 	}
 	public Action getNextAction() {
@@ -28,10 +23,10 @@ public class MoveOutput {
 	public void setCardsToDraw(int cardsToDraw) {
 		this.cardsToDraw = cardsToDraw;
 	}
-	public Player getNextPlayer() {
+	public IPlayer getNextPlayer() {
 		return nextPlayer;
 	}
-	public void setNextPlayer(Player nextPlayer) {
+	public void setNextPlayer(IPlayer nextPlayer) {
 		this.nextPlayer = nextPlayer;
 	}
 	public String getNextColorToPlay() {
