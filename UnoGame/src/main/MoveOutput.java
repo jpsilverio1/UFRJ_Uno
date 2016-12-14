@@ -5,7 +5,7 @@ public class MoveOutput {
 	private Action nextAction;
 	private int cardsToDraw;
 	private IPlayer nextPlayer;
-	private String nextColorToPlay;
+	private Color nextColorToPlay;
 	public ICard getCardOnTopOnDiscardPile() {
 		return cardOnTopOnDiscardPile;
 	}
@@ -30,10 +30,10 @@ public class MoveOutput {
 	public void setNextPlayer(IPlayer nextPlayer) {
 		this.nextPlayer = nextPlayer;
 	}
-	public String getNextColorToPlay() {
+	public Color getNextColorToPlay() {
 		return nextColorToPlay;
 	}
-	public void setNextColorToPlay(String nextColorToPlay) {
+	public void setNextColorToPlay(Color nextColorToPlay) {
 		this.nextColorToPlay = nextColorToPlay;
 	}
 	

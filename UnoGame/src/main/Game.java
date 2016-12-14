@@ -9,7 +9,7 @@ public class Game {
 	private IPlayer currentPlayer;
 	private IPlayer nextPlayer;
 	private int numberOfPlayers;
-	private String nextColorToPlay;
+	private Color nextColorToPlay;
 	
 	public Game(List<IPlayer> players, ICard initialCard) {
 		this.orderedPlayers = new ArrayList<>(players.size());
@@ -27,7 +27,7 @@ public class Game {
 			this.roundDirection = 1;
 		}
 	}
-	public MoveOutput makeAMove(IPlayer currentPlayer, ICard cardPlayed, Action action, String newColor) {
+	public MoveOutput makeAMove(IPlayer currentPlayer, ICard cardPlayed, Action action, Color newColor) {
 		MoveOutput moveOutput = new MoveOutput();
 		this.currentPlayer = currentPlayer;
 		if (action == Action.MOVE) {
@@ -46,7 +46,7 @@ public class Game {
 		return moveOutput;
 	}
 	
-	private String getNextColorToPlay(Action action,String newColor) {
+	private Color getNextColorToPlay(Action action,Color newColor) {
 		if (action == Action.MOVE) {
 			int currentCardID = currentCard.getID();
 			if (currentCardID == 5 || currentCardID == 4) {
