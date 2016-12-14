@@ -1,3 +1,4 @@
+package main;
 
 public interface ICard {
 	public int getNumber();
