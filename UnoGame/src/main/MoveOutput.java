@@ -6,6 +6,7 @@ public class MoveOutput {
 	private int cardsToDraw;
 	private IPlayer nextPlayer;
 	private Color nextColorToPlay;
+	
 	public ICard getCardOnTopOnDiscardPile() {
 		return cardOnTopOnDiscardPile;
 	}
@@ -35,6 +36,17 @@ public class MoveOutput {
 	}
 	public void setNextColorToPlay(Color nextColorToPlay) {
 		this.nextColorToPlay = nextColorToPlay;
+	}
+	
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		sb.append("card on top: "+cardOnTopOnDiscardPile+"\n");
+		sb.append("next action: "+nextAction+"\n");
+		sb.append("next color to play: "+nextColorToPlay+"\n");
+		sb.append("next player: "+nextPlayer.getName()+"\n");
+		sb.append("number of cards to draw: "+cardsToDraw+"\n");
+		return sb.toString();
 	}
 	
 	
