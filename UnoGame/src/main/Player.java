@@ -4,6 +4,8 @@ import java.util.List;
 
 public class Player implements IPlayer {
 
+	private int score = 0; //pontuação total do jogador
+
 	@Override
 	public List<ICard> getHand() {
 		// TODO Auto-generated method stub
@@ -30,7 +32,12 @@ public class Player implements IPlayer {
 
 	@Override
 	public int getScore() {
-		return 0;
+		return score;
+	}
+
+	@Override
+	public void addScore(int points) {
+		score+=points;
 	}
 
 }

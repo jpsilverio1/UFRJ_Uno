@@ -141,4 +141,19 @@ public class Game {
         }
     }
 
+    /**
+     * Controla a pontuação de um jogador (campeão da rodada)
+     * @param winnerPlayer jogador campeão da rodada
+     * @param allCards todas as cartas nas mãos dos jogadores derrotados
+     */
+    private void countPoints(IPlayer winnerPlayer, ArrayList<ICard> allCards){
+        int roundPoints=0;
+
+        for(ICard card : allCards){
+            roundPoints+= card.getScore();
+        }
+
+        winnerPlayer.addScore(roundPoints);
+    }
+
 }
