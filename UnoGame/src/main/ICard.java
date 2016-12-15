@@ -1,6 +1,6 @@
 package main;
 
-public interface ICard {
+public interface ICard extends Comparable {
 	public int getNumber();
 	public Color getColor();
 	public int getID();

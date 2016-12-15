@@ -32,4 +32,14 @@ public class Card implements ICard{
 		return null;
 	}
 
+	@Override
+	/**
+	 * Necessario para a comparacao de listagem
+	 */
+	public int compareTo(Object o) {
+		if (o instanceof Color){
+			return getColor().compareTo((Color) o);
+		}
+		return compareTo(o);
+	}
 }

@@ -27,6 +27,7 @@ public class Game {
 			this.roundDirection = 1;
 		}
 	}
+
 	public MoveOutput makeAMove(IPlayer currentPlayer, ICard cardPlayed, Action action, Color newColor) {
 		MoveOutput moveOutput = new MoveOutput();
 		this.currentPlayer = currentPlayer;
@@ -58,6 +59,7 @@ public class Game {
 		}
 		return this.nextColorToPlay;
 	}
+
 	private Action getNextAction(Action action) {
 		if (action == Action.MOVE) {
 			int currentCardID = currentCard.getID();
@@ -73,12 +75,16 @@ public class Game {
 		}
 		return Action.MOVE;
 	}
+
 	private int getNumberOfCardsToDraw(Action action) {
 		if (action == Action.MOVE) {
 			switch (this.currentCard.getID()) {
-			case 3: return 2;
-			case 5: return 4;
-			default: return 0;
+                case 3:
+                    return 2;
+                case 5:
+                    return 4;
+                default:
+                    return 0;
 			}
 		}
 		return 0;
@@ -102,4 +108,19 @@ public class Game {
 		}
 		return (currentPlayerOrder + roundDirection -1);
 	}
+
+    /**
+     * Informa quando o sistema irá declarar o vencedor do jogo.
+     * @param finishedPlayer jogador que ficou sem cartas na mão no último round
+     * @return true se a pontuação do jogador for maior ou igual a 500; false caso contrário
+     */
+	private boolean endGame(IPlayer finishedPlayer){
+	    if(finishedPlayer.getScore() >= 500){
+	        return true;
+        }
+        else {
+	        return false;
+        }
+    }
+
 }

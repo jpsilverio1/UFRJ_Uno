@@ -38,11 +38,12 @@ public class GameTest {
 		fixture = new Game(players, initialCard);
 	}
 	/* ID 0 : Ação No Action
-ID 1 : Ação Skip
-ID 2 : Ação Reverse
-ID 3 : Ação Draw 2
-ID 4 : Ação Wild
-ID 5 : Ação Wild Draw 4*/
+		ID 1 : Ação Skip
+		ID 2 : Ação Reverse
+		ID 3 : Ação Draw 2
+		ID 4 : Ação Wild
+		ID 5 : Ação Wild Draw 4
+	*/
 	@Test 
 	public void testGameDirection() {
 		Card cardPlayed = mockGameCard(Color.BLUE, 0);
@@ -65,6 +66,12 @@ ID 5 : Ação Wild Draw 4*/
 		MoveOutput output = fixture.makeAMove(player1, cardPlayed, action, null);
 		assertOutputValues(output, player5, player5.getName(), Action.MOVE, 0, cardPlayed, Color.BLUE);		
 	}
+
+	@Test
+    public void testFinishGame(){
+
+    }
+
 	private void assertOutputValues(MoveOutput output,
 			IPlayer expectedNextPlayer, 
 			String expectedNextPlayerName, 
@@ -79,12 +86,14 @@ ID 5 : Ação Wild Draw 4*/
 		assertEquals(expectedCardOnTopOfFile, output.getCardOnTopOnDiscardPile());
 		assertEquals(expectedNextColorToPlay, output.getNextColorToPlay());
 	}
+
 	private Card mockGameCard(Color color, int id) {
 		Card card = mock(Card.class);
 		when(card.getID()).thenReturn(id);
 		when(card.getColor()).thenReturn(color);
 		return card;
 	}
+
 	private void mockPlayer(IPlayer player, int order, String name) {
 		when(player.getOrder()).thenReturn(order);
 		when(player.getName()).thenReturn(name);

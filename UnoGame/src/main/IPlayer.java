@@ -6,4 +6,5 @@ public interface IPlayer {
 	public int getOrder();
 	public String getName();
 	boolean validateMove(ICard currentCardOnTable, ICard cardToBePlayed);
+	int getScore();
 }

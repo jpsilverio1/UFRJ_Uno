@@ -28,4 +28,9 @@ public class Player implements IPlayer {
 		return false;
 	}
 
+	@Override
+	public int getScore() {
+		return 0;
+	}
+
 }
