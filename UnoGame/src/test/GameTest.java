@@ -48,7 +48,46 @@ ID 5 : Ação Wild Draw 4*/
 		Card cardPlayed = mockGameCard(Color.BLUE, 0);
 		Action action = Action.MOVE;
 		MoveOutput output = fixture.makeAMove(player1, cardPlayed, action, null);
+		assertOutputValues(output, player2, player2.getName(), Action.MOVE, 0, cardPlayed, Color.BLUE);				
+	}
+	
+	@Test
+	public void testReverseCard() {
+		//reverse card
+		Card cardPlayed = mockGameCard(Color.BLUE, 2);
+		Action action = Action.MOVE;
+		MoveOutput output = fixture.makeAMove(player1, cardPlayed, action, null);
+		assertOutputValues(output, player5, player5.getName(), Action.MOVE, 0, cardPlayed, Color.BLUE);
+		Card newCard = mockGameCard(Color.BLUE, 0);
+		MoveOutput output2 = fixture.makeAMove(player5, newCard, action, null);
+		assertOutputValues(output2, player4, player4.getName(), action, 0, newCard, Color.BLUE);
+		Card secondNewCard = mockGameCard(Color.BLUE, 2);
+		MoveOutput output3 = fixture.makeAMove(player4, secondNewCard, action, null);
+		assertOutputValues(output3, player5, player5.getName(), action, 0, secondNewCard, Color.BLUE);
+	}
+	@Test
+	public void testWildCard() {
+		//wild card
+		Card cardPlayed = mockGameCard(Color.MULTICOLOR, 4);
+		Action action = Action.MOVE;
+		MoveOutput output = fixture.makeAMove(player2, cardPlayed, action, Color.YELLOW);
+		assertOutputValues(output, player3, player3.getName(), action, 0, cardPlayed, Color.YELLOW);
+	}
+	@Test
+	public void testDrawCards() {
 		
+	}
+	@Test
+	public void testSkipCards() {
+		
+	}
+	@Test
+	public void testDrawWildCard() {
+		//wild card + 4
+		Card cardPlayed = mockGameCard(Color.MULTICOLOR, 5);
+		Action action = Action.MOVE;
+		MoveOutput output = fixture.makeAMove(player5, cardPlayed, action, Color.GREEN);
+		assertOutputValues(output, player1, player1.getName(),Action.DRAW, 4, cardPlayed, Color.GREEN);
 	}
 	
 	@Test
@@ -59,11 +98,7 @@ ID 5 : Ação Wild Draw 4*/
 	}
 	@Test
 	public void another() {
-		//reverse card
-		Card cardPlayed = mockGameCard(Color.BLUE, 2);
-		Action action = Action.MOVE;
-		MoveOutput output = fixture.makeAMove(player1, cardPlayed, action, null);
-		assertOutputValues(output, player5, player5.getName(), Action.MOVE, 0, cardPlayed, Color.BLUE);		
+				
 	}
 	private void assertOutputValues(MoveOutput output,
 			IPlayer expectedNextPlayer, 
