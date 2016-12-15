@@ -123,4 +123,22 @@ public class Game {
         }
     }
 
+    /**
+     * Comportamento do desafio Wild4.
+     * Deve ser capaz de identificar se o desafio foi aceito e repassar a ação de compra de cartas para os jogadores envolvidos
+     * @param challengerPlayer jogador desafiante
+     * @param challengedPlayer jogador desafiado (que jogou a carta wild4)
+     * @return true caso o jogador desafiado tenha a cor da rodada na mão. false caso contrário
+     */
+    private boolean wildCardChallenge(IPlayer challengerPlayer, IPlayer challengedPlayer){
+        //tem que receber a cor do card no topo da pilha
+        if(challengedPlayer.getHand().contains(this.currentCard.getColor())){
+//            challengedPlayer.buyCard(4);
+            return true;	//challenged compra 4 cartas
+        }else {
+//            challengerPlayer.buyCard(6);
+            return false; //challenger compra 6 cartas
+        }
+    }
+
 }
