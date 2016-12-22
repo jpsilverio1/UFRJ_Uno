@@ -37,8 +37,18 @@ public class CardTest {
 
 		List<Card> cardsShuffled = Card.shuffle(cards);
 
-//		System.out.println(Arrays.toString(cards.toArray()));
-//		System.out.println(Arrays.toString(cardsShuffled.toArray()));
+
+		System.out.println("Ordem da entrada:");
+
+		for(Card item: cards){
+			System.out.println(item.getColor()+" "+item.getID()+" "+item.getNumber()+" "+item.getScore());
+		}
+
+		System.out.println("\nOrdem da saida:");
+
+		for(Card item: cardsShuffled){
+			System.out.println("Card: "+item.getColor()+" "+item.getID()+" "+item.getNumber()+" "+item.getScore());
+		}
 
         assertNotEquals(cards, cardsShuffled);
 	}

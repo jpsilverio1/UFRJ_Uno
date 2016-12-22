@@ -20,25 +20,25 @@ public class Card implements ICard {
 	@Override
 	public int getNumber() {
 		// TODO Auto-generated method stub
-		return 0;
+		return this.number;
 	}
 
 	@Override
 	public Color getColor() {
 		// TODO Auto-generated method stub
-		return null;
+		return this.color;
 	}
 
 	@Override
 	public int getID() {
 		// TODO Auto-generated method stub
-		return 0;
+		return this.ID;
 	}
 
 	@Override
 	public int getScore() {
 		// TODO Auto-generated method stub
-		return 0;
+		return this.score;
 	}
 
 	@Override

@@ -38,12 +38,12 @@ public class GameTest {
 		List<IPlayer> players = Arrays.asList(player1, player2, player3, player4, player5);
 		fixture = new Game(players, initialCard);
 	}
-	/* ID 0 : Ação No Action
-ID 1 : Ação Skip
-ID 2 : Ação Reverse
-ID 3 : Ação Draw 2
-ID 4 : Ação Wild
-ID 5 : Ação Wild Draw 4*/
+	/* ID 0 : A??o No Action
+ID 1 : A??o Skip
+ID 2 : A??o Reverse
+ID 3 : A??o Draw 2
+ID 4 : A??o Wild
+ID 5 : A??o Wild Draw 4*/
 	@Test 
 	public void testGameDirection() {
 		Card cardPlayed = mockGameCard(Color.BLUE, 0);
