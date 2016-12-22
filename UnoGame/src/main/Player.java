@@ -1,15 +1,16 @@
 package main;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Player implements IPlayer {
 
 	private int score = 0; //pontuação total do jogador
+	List<ICard> hand = new ArrayList<>();
 
 	@Override
 	public List<ICard> getHand() {
-		// TODO Auto-generated method stub
-		return null;
+		return hand;
 	}
 
 	@Override
@@ -38,6 +39,11 @@ public class Player implements IPlayer {
 	@Override
 	public void addScore(int points) {
 		score+=points;
+	}
+
+	@Override
+	public int getNOfCards() {
+		return getHand().size();
 	}
 
 }
