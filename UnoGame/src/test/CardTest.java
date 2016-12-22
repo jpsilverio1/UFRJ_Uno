@@ -41,7 +41,7 @@ public class CardTest {
 		System.out.println("Ordem da entrada:");
 
 		for(Card item: cards){
-			System.out.println(item.getColor()+" "+item.getID()+" "+item.getNumber()+" "+item.getScore());
+			System.out.println("Card: "+item.getColor()+" "+item.getID()+" "+item.getNumber()+" "+item.getScore());
 		}
 
 		System.out.println("\nOrdem da saida:");
