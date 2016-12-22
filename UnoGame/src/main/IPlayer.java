@@ -1,4 +1,5 @@
 package main;
+import java.util.ArrayList;
 import java.util.List;
 
 public interface IPlayer {
@@ -8,4 +9,5 @@ public interface IPlayer {
 	boolean validateMove(ICard currentCardOnTable, ICard cardToBePlayed);
 	int getScore();
 	void addScore(int points);
+	int getNOfCards();
 }
